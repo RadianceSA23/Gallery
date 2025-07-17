@@ -1,21 +1,42 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useEffect } from 'react';
+import { View, StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
+import UploadScreen from './src/features/uploads/screens/UploadScreen';
+import { store } from './src/app/store';
+import { Provider } from 'react-redux';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+
+import { syncPendingUploads } from './src/features/uploads/redux/actions';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
+ 
+  useEffect(() => {
+    store.dispatch(syncPendingUploads());
+  }, []);
+
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      if (state.isConnected && state.isInternetReachable) {
+        store.dispatch(syncPendingUploads());
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+ 
+
+
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <UploadScreen />
+      </View>
+    </Provider>
   );
 }
 
