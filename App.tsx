@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { View, StatusBar, StyleSheet, useColorScheme } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
-import UploadScreen from './src/features/uploads/screens/UploadScreen';
+
 import { store } from './src/app/store';
 import { Provider } from 'react-redux';
+import UploadScreen from './src/features/uploads/screens/UploadScreen';
 
 
 import { syncPendingUploads } from './src/features/uploads/redux/actions';

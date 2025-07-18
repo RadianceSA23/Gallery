@@ -25,15 +25,17 @@ function* handleUploadImage(action: UploadAction) {
   }
 }
 
+
 function* syncPendingUploads() {
   const state: RootState = yield select();
-  const pendingImages = state.upload.images.filter(img => img.status === 'pending');
+  const failedImages = state.upload.images.filter(img => img.status === 'failed');
 
-  for (const image of pendingImages) {
+  for (const image of failedImages) {
     yield put(actions.uploadImageRequest(image));
-    yield delay(100); 
+    yield delay(100);
   }
 }
+
 
 export function* uploadSagas() {
   yield takeLatest(types.UPLOAD_IMAGE_REQUEST, handleUploadImage);

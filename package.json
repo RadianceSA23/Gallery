@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "react": "19.1.0",
     "react-native": "0.80.1",
+    "react-native-compressor": "^1.12.0",
     "react-native-image-crop-picker": "^0.50.1",
     "react-native-uuid": "^2.0.3",
     "react-redux": "^9.2.0",
